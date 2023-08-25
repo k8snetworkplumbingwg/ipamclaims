@@ -22,3 +22,6 @@ jobs:
         run: hack/verify-codegen.sh
         env:
           GOPATH: /home/runner/go
+
+      - name: Build the client example
+        run: go build -o _out/persistentips_dummy_client cmd/example/main.go
