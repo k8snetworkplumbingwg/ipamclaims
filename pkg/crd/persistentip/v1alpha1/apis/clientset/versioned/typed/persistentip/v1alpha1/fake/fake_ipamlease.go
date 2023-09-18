@@ -101,6 +101,18 @@ func (c *FakeIPAMLeases) Update(ctx context.Context, iPAMLease *v1alpha1.IPAMLea
 	return obj.(*v1alpha1.IPAMLease), err
 }
 
+// UpdateStatus was generated because the type contains a Status member.
+// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
+func (c *FakeIPAMLeases) UpdateStatus(ctx context.Context, iPAMLease *v1alpha1.IPAMLease, opts v1.UpdateOptions) (*v1alpha1.IPAMLease, error) {
+	obj, err := c.Fake.
+		Invokes(testing.NewUpdateSubresourceAction(ipamleasesResource, "status", c.ns, iPAMLease), &v1alpha1.IPAMLease{})
+
+	if obj == nil {
+		return nil, err
+	}
+	return obj.(*v1alpha1.IPAMLease), err
+}
+
 // Delete takes name of the iPAMLease and deletes it. Returns an error if one occurs.
 func (c *FakeIPAMLeases) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.

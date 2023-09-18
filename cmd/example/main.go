@@ -40,11 +40,10 @@ func main() {
 		Spec: v1alpha1.IPAMLeaseSpec{
 			Network:   "tenantblue",
 			Interface: "iface321",
-			IPs:       []string{"winner", "winner", "chicken", "dinner"},
 		},
 	}
 
-	_, err = exampleClient.K8sV1alpha1().IPAMLeases("default").Create(
+	ipamLease, err := exampleClient.K8sV1alpha1().IPAMLeases("default").Create(
 		context.Background(),
 		pip,
 		metav1.CreateOptions{},
@@ -62,6 +61,16 @@ func main() {
 		)
 	}()
 
+	ipamLease.Status.IPs = []string{"winner", "winner", "chicken", "dinner"}
+	_, err = exampleClient.K8sV1alpha1().IPAMLeases("default").UpdateStatus(
+		context.Background(),
+		ipamLease,
+		metav1.UpdateOptions{},
+	)
+	if err != nil {
+		glog.Fatalf("Error creating a dummy persistentIP object: %v", err)
+	}
+
 	allPersistentIPs, err := exampleClient.K8sV1alpha1().IPAMLeases(metav1.NamespaceAll).List(
 		context.Background(),
 		metav1.ListOptions{},
@@ -73,5 +82,6 @@ func main() {
 	for _, persistentIP := range allPersistentIPs.Items {
 		fmt.Printf("IPAM lease name: %q\n", persistentIP.Name)
 		fmt.Printf("  - spec: %v\n", persistentIP.Spec)
+		fmt.Printf("  - status: %v\n", persistentIP.Status)
 	}
 }
