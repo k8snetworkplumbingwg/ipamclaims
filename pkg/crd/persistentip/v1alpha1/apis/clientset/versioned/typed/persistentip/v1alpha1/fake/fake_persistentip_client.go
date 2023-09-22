@@ -28,8 +28,8 @@ type FakeK8sV1alpha1 struct {
 	*testing.Fake
 }
 
-func (c *FakeK8sV1alpha1) IPAMLeases(namespace string) v1alpha1.IPAMLeaseInterface {
-	return &FakeIPAMLeases{c, namespace}
+func (c *FakeK8sV1alpha1) IPAMClaims(namespace string) v1alpha1.IPAMClaimInterface {
+	return &FakeIPAMClaims{c, namespace}
 }
 
 // RESTClient returns a RESTClient that is used to communicate
