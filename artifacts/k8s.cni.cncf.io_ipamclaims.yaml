@@ -4,20 +4,20 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.13.0
-  name: ipamleases.k8s.cni.cncf.io
+  name: ipamclaims.k8s.cni.cncf.io
 spec:
   group: k8s.cni.cncf.io
   names:
-    kind: IPAMLease
-    listKind: IPAMLeaseList
-    plural: ipamleases
-    singular: ipamlease
+    kind: IPAMClaim
+    listKind: IPAMClaimList
+    plural: ipamclaims
+    singular: ipamclaim
   scope: Namespaced
   versions:
   - name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: IPAMLease is the Schema for the IPAMLease API
+        description: IPAMClaim is the Schema for the IPAMClaim API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation

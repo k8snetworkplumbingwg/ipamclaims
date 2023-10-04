@@ -33,17 +33,17 @@ func main() {
 	}
 
 	// create a persistent IP allocation
-	pip := &v1alpha1.IPAMLease{
+	pip := &v1alpha1.IPAMClaim{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: "example",
 		},
-		Spec: v1alpha1.IPAMLeaseSpec{
+		Spec: v1alpha1.IPAMClaimSpec{
 			Network:   "tenantblue",
 			Interface: "iface321",
 		},
 	}
 
-	ipamLease, err := exampleClient.K8sV1alpha1().IPAMLeases("default").Create(
+	ipamClaim, err := exampleClient.K8sV1alpha1().IPAMClaims("default").Create(
 		context.Background(),
 		pip,
 		metav1.CreateOptions{},
@@ -54,24 +54,24 @@ func main() {
 
 	defer func() {
 		// teardown persistent IP
-		_ = exampleClient.K8sV1alpha1().IPAMLeases("default").Delete(
+		_ = exampleClient.K8sV1alpha1().IPAMClaims("default").Delete(
 			context.Background(),
 			pip.Name,
 			metav1.DeleteOptions{},
 		)
 	}()
 
-	ipamLease.Status.IPs = []string{"winner", "winner", "chicken", "dinner"}
-	_, err = exampleClient.K8sV1alpha1().IPAMLeases("default").UpdateStatus(
+	ipamClaim.Status.IPs = []string{"winner", "winner", "chicken", "dinner"}
+	_, err = exampleClient.K8sV1alpha1().IPAMClaims("default").UpdateStatus(
 		context.Background(),
-		ipamLease,
+		ipamClaim,
 		metav1.UpdateOptions{},
 	)
 	if err != nil {
 		glog.Fatalf("Error creating a dummy persistentIP object: %v", err)
 	}
 
-	allPersistentIPs, err := exampleClient.K8sV1alpha1().IPAMLeases(metav1.NamespaceAll).List(
+	allPersistentIPs, err := exampleClient.K8sV1alpha1().IPAMClaims(metav1.NamespaceAll).List(
 		context.Background(),
 		metav1.ListOptions{},
 	)
@@ -80,7 +80,7 @@ func main() {
 	}
 
 	for _, persistentIP := range allPersistentIPs.Items {
-		fmt.Printf("IPAM lease name: %q\n", persistentIP.Name)
+		fmt.Printf("IPAM claim name: %q\n", persistentIP.Name)
 		fmt.Printf("  - spec: %v\n", persistentIP.Spec)
 		fmt.Printf("  - status: %v\n", persistentIP.Status)
 	}
