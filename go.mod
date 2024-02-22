@@ -1,4 +1,4 @@
-module github.com/maiqueb/persistentips
+module github.com/k8snetworkplumbingwg/ipamclaims
 
 go 1.20
 

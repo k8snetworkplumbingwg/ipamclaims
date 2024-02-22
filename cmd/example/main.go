@@ -10,8 +10,8 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/tools/clientcmd"
 
-	"github.com/maiqueb/persistentips/pkg/crd/persistentip/v1alpha1"
-	clientset "github.com/maiqueb/persistentips/pkg/crd/persistentip/v1alpha1/apis/clientset/versioned"
+	"github.com/k8snetworkplumbingwg/ipamclaims/pkg/crd/ipamclaims/v1alpha1"
+	clientset "github.com/k8snetworkplumbingwg/ipamclaims/pkg/crd/ipamclaims/v1alpha1/apis/clientset/versioned"
 )
 
 var (
