@@ -38,8 +38,8 @@ spec:
                   created
                 type: string
               network:
-                description: The network attachment definition name for which this
-                  persistent allocation was created
+                description: The network name for which this persistent allocation
+                  was created
                 type: string
             required:
             - interface

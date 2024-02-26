@@ -29,7 +29,7 @@ type IPAMClaim struct {
 }
 
 type IPAMClaimSpec struct {
-	// The network attachment definition name for which this persistent allocation was created
+	// The network name for which this persistent allocation was created
 	Network string `json:"network"`
 	// The pod interface name for which this allocation was created
 	Interface string `json:"interface"`
