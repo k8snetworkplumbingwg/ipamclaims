@@ -61,7 +61,7 @@ func main() {
 		)
 	}()
 
-	ipamClaim.Status.IPs = []string{"winner", "winner", "chicken", "dinner"}
+	ipamClaim.Status.IPs = []v1alpha1.CIDR{"winner", "winner", "chicken", "dinner"}
 	_, err = exampleClient.K8sV1alpha1().IPAMClaims("default").UpdateStatus(
 		context.Background(),
 		ipamClaim,
