@@ -41,22 +41,24 @@ var ipamclaimsKind = v1alpha1.SchemeGroupVersion.WithKind("IPAMClaim")
 
 // Get takes name of the iPAMClaim, and returns the corresponding iPAMClaim object, and an error if there is any.
 func (c *FakeIPAMClaims) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.IPAMClaim, err error) {
+	emptyResult := &v1alpha1.IPAMClaim{}
 	obj, err := c.Fake.
-		Invokes(testing.NewGetAction(ipamclaimsResource, c.ns, name), &v1alpha1.IPAMClaim{})
+		Invokes(testing.NewGetActionWithOptions(ipamclaimsResource, c.ns, name, options), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.IPAMClaim), err
 }
 
 // List takes label and field selectors, and returns the list of IPAMClaims that match those selectors.
 func (c *FakeIPAMClaims) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.IPAMClaimList, err error) {
+	emptyResult := &v1alpha1.IPAMClaimList{}
 	obj, err := c.Fake.
-		Invokes(testing.NewListAction(ipamclaimsResource, ipamclaimsKind, c.ns, opts), &v1alpha1.IPAMClaimList{})
+		Invokes(testing.NewListActionWithOptions(ipamclaimsResource, ipamclaimsKind, c.ns, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 
 	label, _, _ := testing.ExtractFromListOptions(opts)
@@ -75,40 +77,43 @@ func (c *FakeIPAMClaims) List(ctx context.Context, opts v1.ListOptions) (result 
 // Watch returns a watch.Interface that watches the requested iPAMClaims.
 func (c *FakeIPAMClaims) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return c.Fake.
-		InvokesWatch(testing.NewWatchAction(ipamclaimsResource, c.ns, opts))
+		InvokesWatch(testing.NewWatchActionWithOptions(ipamclaimsResource, c.ns, opts))
 
 }
 
 // Create takes the representation of a iPAMClaim and creates it.  Returns the server's representation of the iPAMClaim, and an error, if there is any.
 func (c *FakeIPAMClaims) Create(ctx context.Context, iPAMClaim *v1alpha1.IPAMClaim, opts v1.CreateOptions) (result *v1alpha1.IPAMClaim, err error) {
+	emptyResult := &v1alpha1.IPAMClaim{}
 	obj, err := c.Fake.
-		Invokes(testing.NewCreateAction(ipamclaimsResource, c.ns, iPAMClaim), &v1alpha1.IPAMClaim{})
+		Invokes(testing.NewCreateActionWithOptions(ipamclaimsResource, c.ns, iPAMClaim, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.IPAMClaim), err
 }
 
 // Update takes the representation of a iPAMClaim and updates it. Returns the server's representation of the iPAMClaim, and an error, if there is any.
 func (c *FakeIPAMClaims) Update(ctx context.Context, iPAMClaim *v1alpha1.IPAMClaim, opts v1.UpdateOptions) (result *v1alpha1.IPAMClaim, err error) {
+	emptyResult := &v1alpha1.IPAMClaim{}
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateAction(ipamclaimsResource, c.ns, iPAMClaim), &v1alpha1.IPAMClaim{})
+		Invokes(testing.NewUpdateActionWithOptions(ipamclaimsResource, c.ns, iPAMClaim, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.IPAMClaim), err
 }
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeIPAMClaims) UpdateStatus(ctx context.Context, iPAMClaim *v1alpha1.IPAMClaim, opts v1.UpdateOptions) (*v1alpha1.IPAMClaim, error) {
+func (c *FakeIPAMClaims) UpdateStatus(ctx context.Context, iPAMClaim *v1alpha1.IPAMClaim, opts v1.UpdateOptions) (result *v1alpha1.IPAMClaim, err error) {
+	emptyResult := &v1alpha1.IPAMClaim{}
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceAction(ipamclaimsResource, "status", c.ns, iPAMClaim), &v1alpha1.IPAMClaim{})
+		Invokes(testing.NewUpdateSubresourceActionWithOptions(ipamclaimsResource, "status", c.ns, iPAMClaim, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.IPAMClaim), err
 }
@@ -123,7 +128,7 @@ func (c *FakeIPAMClaims) Delete(ctx context.Context, name string, opts v1.Delete
 
 // DeleteCollection deletes a collection of objects.
 func (c *FakeIPAMClaims) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionAction(ipamclaimsResource, c.ns, listOpts)
+	action := testing.NewDeleteCollectionActionWithOptions(ipamclaimsResource, c.ns, opts, listOpts)
 
 	_, err := c.Fake.Invokes(action, &v1alpha1.IPAMClaimList{})
 	return err
@@ -131,11 +136,12 @@ func (c *FakeIPAMClaims) DeleteCollection(ctx context.Context, opts v1.DeleteOpt
 
 // Patch applies the patch and returns the patched iPAMClaim.
 func (c *FakeIPAMClaims) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.IPAMClaim, err error) {
+	emptyResult := &v1alpha1.IPAMClaim{}
 	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceAction(ipamclaimsResource, c.ns, name, pt, data, subresources...), &v1alpha1.IPAMClaim{})
+		Invokes(testing.NewPatchSubresourceActionWithOptions(ipamclaimsResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.IPAMClaim), err
 }
