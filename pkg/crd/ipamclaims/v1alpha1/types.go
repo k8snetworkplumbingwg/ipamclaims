@@ -35,9 +35,14 @@ type IPAMClaimSpec struct {
 	Interface string `json:"interface"`
 }
 
+// IPAMClaimStatus contains the observed status of the IPAMClaim.
 type IPAMClaimStatus struct {
 	// The list of IP addresses (v4, v6) that were allocated for the pod interface
 	IPs []string `json:"ips"`
+	// The name of the pod holding the IPAMClaim
+	OwnerPod OwnerPod `json:"ownerPod,omitempty"`
+	// Conditions contains details for one aspect of the current state of this API Resource
+	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -46,4 +51,8 @@ type IPAMClaimList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
 	Items           []IPAMClaim `json:"items"`
+}
+
+type OwnerPod struct {
+	Name string `json:"name"`
 }
