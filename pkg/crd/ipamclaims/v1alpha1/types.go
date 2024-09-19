@@ -30,17 +30,24 @@ type IPAMClaim struct {
 
 type IPAMClaimSpec struct {
 	// The network name for which this persistent allocation was created
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:XValidation:rule="self == oldSelf",message="Network is immutable"
 	Network string `json:"network"`
 	// The pod interface name for which this allocation was created
+	// +kubebuilder:validation:XValidation:rule="self == oldSelf",message="Interface is immutable"
 	Interface string `json:"interface"`
-	// The IPs requested by the user
+	// The IPs (v4, v6) requested by the user for this particular network attachment
 	// +optional
+	// +kubebuilder:validation:MaxItems=2
+	// +kubebuilder:validation:XValidation:rule="self == oldSelf",message="IPRequests are immutable"
+	// +kubebuilder:validation:XValidation:rule="size(self) != 2 || isCIDR(self[0]) && isCIDR(self[1]) && cidr(self[0]).ip().family() != cidr(self[1]).ip().family()", message="When 2 CIDRs are set, they must be from different IP families"
 	IPRequests []CIDR `json:"ipRequests,omitempty"`
 }
 
 // IPAMClaimStatus contains the observed status of the IPAMClaim.
 type IPAMClaimStatus struct {
 	// The list of IP addresses (v4, v6) that were allocated for the pod interface
+	// +kubebuilder:validation:MaxItems=2
 	IPs []CIDR `json:"ips"`
 	// The name of the pod holding the IPAMClaim
 	OwnerPod string `json:"ownerPod"`
@@ -56,4 +63,6 @@ type IPAMClaimList struct {
 	Items           []IPAMClaim `json:"items"`
 }
 
+// CIDR represents
+// +kubebuilder:validation:XValidation:rule="isCIDR(self)", message="CIDR is invalid"
 type CIDR string

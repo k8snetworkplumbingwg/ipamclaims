@@ -42,15 +42,33 @@ spec:
                 description: The pod interface name for which this allocation was
                   created
                 type: string
+                x-kubernetes-validations:
+                - message: Interface is immutable
+                  rule: self == oldSelf
               ipRequests:
-                description: The IPs requested by the user
+                description: The IPs (v4, v6) requested by the user for this particular
+                  network attachment
                 items:
+                  description: CIDR represents
                   type: string
+                  x-kubernetes-validations:
+                  - message: CIDR is invalid
+                    rule: isCIDR(self)
+                maxItems: 2
                 type: array
+                x-kubernetes-validations:
+                - message: IPRequests are immutable
+                  rule: self == oldSelf
+                - message: When 2 CIDRs are set, they must be from different IP families
+                  rule: size(self) != 2 || isCIDR(self[0]) && isCIDR(self[1]) && cidr(self[0]).ip().family()
+                    != cidr(self[1]).ip().family()
               network:
                 description: The network name for which this persistent allocation
                   was created
                 type: string
+                x-kubernetes-validations:
+                - message: Network is immutable
+                  rule: self == oldSelf
             required:
             - interface
             - network
@@ -120,7 +138,12 @@ spec:
                 description: The list of IP addresses (v4, v6) that were allocated
                   for the pod interface
                 items:
+                  description: CIDR represents
                   type: string
+                  x-kubernetes-validations:
+                  - message: CIDR is invalid
+                    rule: isCIDR(self)
+                maxItems: 2
                 type: array
               ownerPod:
                 description: The name of the pod holding the IPAMClaim
