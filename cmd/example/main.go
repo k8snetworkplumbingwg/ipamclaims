@@ -38,8 +38,9 @@ func main() {
 			Name: "example",
 		},
 		Spec: v1alpha1.IPAMClaimSpec{
-			Network:   "tenantblue",
-			Interface: "iface321",
+			Network:    "tenantblue",
+			Interface:  "iface321",
+			IPRequests: []v1alpha1.CIDR{"10.10.10.0/24", "fd10::0/64"},
 		},
 	}
 
@@ -61,7 +62,7 @@ func main() {
 		)
 	}()
 
-	ipamClaim.Status.IPs = []string{"winner", "winner", "chicken", "dinner"}
+	ipamClaim.Status.IPs = []v1alpha1.CIDR{"192.168.0.0/16", "fd00:abcd::0/64"}
 	_, err = exampleClient.K8sV1alpha1().IPAMClaims("default").UpdateStatus(
 		context.Background(),
 		ipamClaim,
