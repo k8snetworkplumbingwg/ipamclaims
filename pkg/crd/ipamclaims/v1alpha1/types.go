@@ -4,7 +4,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-//go:generate go run sigs.k8s.io/controller-tools/cmd/controller-gen@v0.13.0 paths=./... object crd output:artifacts:code=./,config=../../../../artifacts
+//go:generate go run sigs.k8s.io/controller-tools/cmd/controller-gen@v0.16.5 paths=./... object crd output:artifacts:code=./,config=../../../../artifacts
 
 //go:generate go run k8s.io/code-generator/cmd/client-gen@v0.28.0 client-gen --go-header-file ../../../../hack/custom-boilerplate.go.txt --clientset-name versioned --input-base "" --input github.com/k8snetworkplumbingwg/ipamclaims/pkg/crd/ipamclaims/v1alpha1 --output-package github.com/k8snetworkplumbingwg/ipamclaims/pkg/crd/ipamclaims/v1alpha1/apis/clientset ..
 
