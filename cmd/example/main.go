@@ -62,6 +62,17 @@ func main() {
 	}()
 
 	ipamClaim.Status.IPs = []string{"winner", "winner", "chicken", "dinner"}
+	ipamClaim.Status.OwnerPod = v1alpha1.OwnerPod{Name: "that-pod-over-there"}
+	ipamClaim.Status.Conditions = []metav1.Condition{
+		{
+			Type:               "GoodAllocation",
+			Status:             metav1.ConditionTrue,
+			ObservedGeneration: int64(10000),
+			LastTransitionTime: metav1.Now(),
+			Reason:             "ips were set",
+			Message:            "successful allocation",
+		},
+	}
 	_, err = exampleClient.K8sV1alpha1().IPAMClaims("default").UpdateStatus(
 		context.Background(),
 		ipamClaim,
