@@ -62,7 +62,7 @@ func main() {
 	}()
 
 	ipamClaim.Status.IPs = []string{"winner", "winner", "chicken", "dinner"}
-	ipamClaim.Status.OwnerPod = v1alpha1.OwnerPod{Name: "that-pod-over-there"}
+	ipamClaim.Status.OwnerPod = &v1alpha1.OwnerPod{Name: "that-pod-over-there"}
 	ipamClaim.Status.Conditions = []metav1.Condition{
 		{
 			Type:               "GoodAllocation",
