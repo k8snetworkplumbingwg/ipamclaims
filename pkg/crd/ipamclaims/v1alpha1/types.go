@@ -38,7 +38,8 @@ type IPAMClaimSpec struct {
 // IPAMClaimStatus contains the observed status of the IPAMClaim.
 type IPAMClaimStatus struct {
 	// The list of IP addresses (v4, v6) that were allocated for the pod interface
-	IPs []string `json:"ips"`
+	// +kubebuilder:validation:MinItems=1
+	IPs []string `json:"ips,omitempty"`
 	// The name of the pod holding the IPAMClaim
 	OwnerPod *OwnerPod `json:"ownerPod,omitempty"`
 	// Conditions contains details for one aspect of the current state of this API Resource
