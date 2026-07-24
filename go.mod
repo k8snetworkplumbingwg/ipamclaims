@@ -3,7 +3,7 @@ module github.com/k8snetworkplumbingwg/ipamclaims
 go 1.23.0
 
 require (
-	github.com/golang/glog v1.1.2
+	github.com/golang/glog v1.2.4
 	k8s.io/apimachinery v0.32.5
 	k8s.io/client-go v0.32.5
 )
