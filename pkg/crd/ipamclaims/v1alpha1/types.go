@@ -39,6 +39,10 @@ type IPAMClaimSpec struct {
 type IPAMClaimStatus struct {
 	// The list of IP addresses (v4, v6) that were allocated for the pod interface
 	IPs []string `json:"ips"`
+	// The list of IPv6 prefixes (CIDR) delegated to the pod interface via DHCPv6
+	// Prefix Delegation, persisted so the same prefix is reproduced across pod
+	// churn (e.g. KubeVirt live migration)
+	DelegatedPrefixes []string `json:"delegatedPrefixes,omitempty"`
 	// The name of the pod holding the IPAMClaim
 	OwnerPod *OwnerPod `json:"ownerPod,omitempty"`
 	// Conditions contains details for one aspect of the current state of this API Resource

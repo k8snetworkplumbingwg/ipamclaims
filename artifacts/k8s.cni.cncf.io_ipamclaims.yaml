@@ -111,6 +111,14 @@ spec:
                   - type
                   type: object
                 type: array
+              delegatedPrefixes:
+                description: |-
+                  The list of IPv6 prefixes (CIDR) delegated to the pod interface via DHCPv6
+                  Prefix Delegation, persisted so the same prefix is reproduced across pod
+                  churn (e.g. KubeVirt live migration)
+                items:
+                  type: string
+                type: array
               ips:
                 description: The list of IP addresses (v4, v6) that were allocated
                   for the pod interface

@@ -91,6 +91,11 @@ func (in *IPAMClaimStatus) DeepCopyInto(out *IPAMClaimStatus) {
 		*out = make([]string, len(*in))
 		copy(*out, *in)
 	}
+	if in.DelegatedPrefixes != nil {
+		in, out := &in.DelegatedPrefixes, &out.DelegatedPrefixes
+		*out = make([]string, len(*in))
+		copy(*out, *in)
+	}
 	if in.OwnerPod != nil {
 		in, out := &in.OwnerPod, &out.OwnerPod
 		*out = new(OwnerPod)
